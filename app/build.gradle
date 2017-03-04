@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "com.vipin.dbflowtest"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+def dbflow_version = "4.0.0-beta5"
+def sqlcipher_version = "3.5.4@aar"
+// or dbflow_version = "develop-SNAPSHOT" for grabbing latest dependency in your project on the develop branch
+// or 10-digit short-hash of a specific commit. (Useful for bugs fixed in develop, but not in a release yet)
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+
+    // use kapt for kotlin apt if you're a Kotlin user
+//    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+
+    // sql-cipher database encryption (optional)
+    compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
+
+    compile "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
+
+    // kotlin extensions
+    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
+}

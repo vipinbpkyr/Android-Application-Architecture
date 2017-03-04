@@ -38,8 +38,3 @@ captures/
 
 # Keystore files
 *.jks
-
-/.idea/libraries
-.DS_Store
-/captures
-.externalNativeBuild
